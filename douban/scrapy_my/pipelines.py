@@ -21,6 +21,6 @@ class JsonWriterPipeline(object):
         return item
 
     def spider_closed(self, spider):
-    	self.file.close()
+        self.file.close()
 
-    	file = codecs.open(filename,'wb',encoding='utf-8')
+        file = codecs.open(filename, 'wb', encoding='utf-8')

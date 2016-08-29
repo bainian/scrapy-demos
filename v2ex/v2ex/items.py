@@ -5,18 +5,18 @@
 # See documentation in:
 # http://doc.scrapy.org/en/latest/topics/items.html
 
-from scrapy.item import Item,Field 
+from scrapy.item import Item, Field
 
 
 class V2ExItem(Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    link=Field()
-    title=Field()
-    author=Field()
-    category=Field()
-    pub_date=Field()
-    reply_count=Field()
+    link = Field()
+    title = Field()
+    author = Field()
+    category = Field()
+    pub_date = Field()
+    reply_count = Field()
 
     '''
     create database scrapy DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;

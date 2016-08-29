@@ -49,6 +49,4 @@ class JdcomputerItem(Item):
     title = Field()
     meta = Field()
     price = Field()
-    comment_count=Field()
-
-
+    comment_count = Field()

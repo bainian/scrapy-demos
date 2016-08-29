@@ -25,11 +25,13 @@ class JsonWriterPipeline(object):
         return item
 
     def spider_closed(self, spider):
-    	self.file.close()
+        self.file.close()
 
-    	file = codecs.open(filename,'wb',encoding='utf-8')
+        file = codecs.open(filename, 'wb', encoding='utf-8')
+
 
 class KrPipeline(object):
+
     def process_item(self, item, spider):
         return item
 
@@ -53,7 +55,7 @@ class MySQLStorePipeline(object):
             charset='utf8',
             use_unicode=True,
         )
-        dbpool = adbapi.ConnectionPool('MySQLdb',**dbargs)
+        dbpool = adbapi.ConnectionPool('MySQLdb', **dbargs)
         return cls(dbpool)
 
     def process_item(self, item, spider):
@@ -82,13 +84,13 @@ class MySQLStorePipeline(object):
                 UPDATE kr
                 SET title=%s, author=%s,link=%s,reply_count=%s 
                 WHERE guid=%s
-            """, (item['title'], item['author'],item['link'],item['reply_count'], guid))
+            """, (item['title'], item['author'], item['link'], item['reply_count'], guid))
             spider.log("Item updated in db: %s %r" % (guid, item))
         else:
             conn.execute("""
                 INSERT INTO kr (guid,product_url,image_url)
                 VALUES (%s,%s,%s)
-            """, (guid,item['product_url'],item['image_url']))
+            """, (guid, item['product_url'], item['image_url']))
             spider.log("Item stored in db: %s %r" % (guid, item))
 
     def _handle_error(self, failure, item, spider):

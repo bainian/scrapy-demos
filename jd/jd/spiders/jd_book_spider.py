@@ -38,44 +38,51 @@ class jd(CrawlSpider):
         return items
 '''
 
+
 class jd_book(CrawlSpider):
-    name='jd_book'
+    name = 'jd_book'
 
-    allowed_domains=['e.jd.com']
+    allowed_domains = ['e.jd.com']
 
-    start_urls=['http://e.jd.com/ebook.html']
+    start_urls = ['http://e.jd.com/ebook.html']
 
-    rules=[
-        Rule(sle(allow=(u'e.jd.com/\d+\.html')),callback='parse_jdbook')
+    rules = [
+        Rule(sle(allow=(u'e.jd.com/\d+\.html')), callback='parse_jdbook')
 
     ]
 
-    def parse_jdbook(self,response):
-        items=[]
+    def parse_jdbook(self, response):
+        items = []
 
-        sel=Selector(response)
+        sel = Selector(response)
 
-        sites=sel.xpath('/html')
+        sites = sel.xpath('/html')
 
         for site in sites:
-            item=JdbookItem()
+            item = JdbookItem()
 
-            item['product_url']=response.url
-            item['image_url']=site.xpath('//div[@id="preview"]/div/img[@src]').re(r'src="(.*?)" jqimg')
+            item['product_url'] = response.url
+            item['image_url'] = site.xpath(
+                '//div[@id="preview"]/div/img[@src]').re(r'src="(.*?)" jqimg')
 
-            item['title']=site.xpath('//div[@id="name"]/h2/text()').extract()
-            item['price']=site.xpath('//div[@id="name"]//span[@class="price"]/text()').extract()
-            item['author']=site.xpath('//div[@id="name"]//ul[@id="summary"]/li[1]//a/text()').extract()
-            
+            item['title'] = site.xpath('//div[@id="name"]/h2/text()').extract()
+            item['price'] = site.xpath(
+                '//div[@id="name"]//span[@class="price"]/text()').extract()
+            item['author'] = site.xpath(
+                '//div[@id="name"]//ul[@id="summary"]/li[1]//a/text()').extract()
+
             # 时间标杆可能不同
-            temp=site.xpath('//div[@id="name"]//ul[@id="summary"]/li[4]/text()').extract()
+            temp = site.xpath(
+                '//div[@id="name"]//ul[@id="summary"]/li[4]/text()').extract()
             if temp:
-                item['pub_date']=site.xpath('//div[@id="name"]//ul[@id="summary"]/li[4]/text()').extract()
+                item['pub_date'] = site.xpath(
+                    '//div[@id="name"]//ul[@id="summary"]/li[4]/text()').extract()
             else:
-                item['pub_date']=site.xpath('//div[@id="name"]//ul[@id="summary"]/li[3]/text()').extract()
+                item['pub_date'] = site.xpath(
+                    '//div[@id="name"]//ul[@id="summary"]/li[3]/text()').extract()
 
             items.append(item)
-            if(len(items)>20):
+            if(len(items) > 20):
                 raise CloseSpider('enough')
 
             return items

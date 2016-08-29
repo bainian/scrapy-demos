@@ -16,8 +16,8 @@ NEWSPIDER_MODULE = 'scrapy_my.spiders'
 
 
 ITEM_PIPELINES = {
-    'scrapy_my.pipelines.JsonWriterPipeline':300,
-    'scrapy.contrib.pipeline.images.ImagesPipeline':1,
+    'scrapy_my.pipelines.JsonWriterPipeline': 300,
+    'scrapy.contrib.pipeline.images.ImagesPipeline': 1,
 }
 IMAGES_STORE = 'F:\\scrapy_my\\images'
 

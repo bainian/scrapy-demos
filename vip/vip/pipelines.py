@@ -13,6 +13,7 @@ from hashlib import md5
 from scrapy import log
 from twisted.enterprise import adbapi
 
+
 class JsonWriterPipeline(object):
 
     def __init__(self):
@@ -24,11 +25,13 @@ class JsonWriterPipeline(object):
         return item
 
     def spider_closed(self, spider):
-    	self.file.close()
+        self.file.close()
 
-    	file = codecs.open(filename,'wb',encoding='utf-8')
+        file = codecs.open(filename, 'wb', encoding='utf-8')
+
 
 class VipPipeline(object):
+
     def process_item(self, item, spider):
         return item
 

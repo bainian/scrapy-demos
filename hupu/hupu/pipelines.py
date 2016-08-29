@@ -13,6 +13,7 @@ from hashlib import md5
 from scrapy import log
 from twisted.enterprise import adbapi
 
+
 class JsonWriterPipeline(object):
 
     def __init__(self):
@@ -24,13 +25,16 @@ class JsonWriterPipeline(object):
         return item
 
     def spider_closed(self, spider):
-    	self.file.close()
+        self.file.close()
 
-    	file = codecs.open(filename,'wb',encoding='utf-8')
+        file = codecs.open(filename, 'wb', encoding='utf-8')
+
 
 class HupuPipeline(object):
+
     def process_item(self, item, spider):
         return item
+
 
 class MySQLStorePipeline(object):
     """A pipeline to store the item in a MySQL database.
@@ -51,7 +55,7 @@ class MySQLStorePipeline(object):
             charset='utf8',
             use_unicode=True,
         )
-        dbpool = adbapi.ConnectionPool('MySQLdb',**dbargs)
+        dbpool = adbapi.ConnectionPool('MySQLdb', **dbargs)
         return cls(dbpool)
 
     def process_item(self, item, spider):
@@ -80,13 +84,13 @@ class MySQLStorePipeline(object):
                 UPDATE hupu
                 SET url=%s 
                 WHERE guid=%s
-            """, (item['url'],guid))
+            """, (item['url'], guid))
             spider.log("Item updated in db: %s %r" % (guid, item))
         else:
             conn.execute("""
                 INSERT INTO hupu (guid,url)
                 VALUES (%s,%s)
-            """, (guid,item['url']))
+            """, (guid, item['url']))
             spider.log("Item stored in db: %s %r" % (guid, item))
 
     def _handle_error(self, failure, item, spider):
