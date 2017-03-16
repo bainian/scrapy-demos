@@ -7,7 +7,7 @@
 
 * `code is cheap,show me the example`
 
-* 所有的例子都是以'Xpath'来作为提取路径，但对前端精通的话，'CSS Selector'也很好
+* 所有的例子都是以 `Xpath` 来作为提取路径，也可以选择`CSS Selector`
 ---
 
 * 我存储的数据库采用的是 MySQL ,如果要直观运行效果，只需要在`settings.py`中注释掉
